@@ -80,14 +80,14 @@ void SPI_Transmit_char(uint8_t u8_SData)
 	SPI_SPDR=u8_SData;
 
 	/*Wait until transmit is complete*/
-	while((GET_BIT(SPI_SPSR,SPSR_SPIF))==0);
+	while(SPI_flagComplete() == 0);
 
 }
 void SPI_Receive_char(uint8_t* u8_Rdata)
 {
 
 	/*Wait until transmit is complete*/
-	while((GET_BIT(SPI_SPSR,SPSR_SPIF))==0);
+	while(SPI_flagComplete() == 0);
 
 	/*save the data value*/
 	*u8_Rdata=SPI_SPDR;
@@ -121,4 +121,11 @@ void SPI_ReceiveStr(uint8_t* u8_Rdata)
 		local_u8Counter++;//counter increment
 	}while(local_u8Temp != '\0');//iterate until null
 	u8_Rdata[local_u8Counter]=local_u8Temp;//save the last elemr=ent in string by null
+}
+
+uint8_t SPI_flagComplete(void)
+{
+	uint8_t local_u8FlagRead;
+	local_u8FlagRead=GET_BIT(SPI_SPSR,SPSR_SPIF);
+	return local_u8FlagRead;
 }

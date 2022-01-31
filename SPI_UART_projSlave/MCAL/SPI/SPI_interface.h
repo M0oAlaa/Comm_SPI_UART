@@ -27,4 +27,7 @@ void SPI_TransmitStr(uint8_t* u8_Sdata);
 /*Declaration of receive string*/
 void SPI_ReceiveStr(uint8_t* u8_Rdata);
 
+/*Get flag of completion function*/
+uint8_t SPI_flagComplete(void);
+
 #endif
